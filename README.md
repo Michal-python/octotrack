@@ -38,7 +38,7 @@ A Rust-based tool to display and analyze GitHub user activity, including contrib
    
 ### Example output
 ```
-🔵 JohnDoe's GitHub Latest Activity
+🔵 Michal-python's GitHub Latest Activity
 ────────────────────────────────
 📌 Commits: 42
 🔀 Pull Requests: 10
