@@ -1,8 +1,8 @@
 use chrono::{Datelike, NaiveDate, Utc};
+use reqwest::header::HeaderMap;
 use reqwest::{Client, StatusCode, header};
 use serde_json::Value;
 use std::error::Error;
-use reqwest::header::HeaderMap;
 
 const GITHUB_API_URL: &str = "https://api.github.com";
 
@@ -131,7 +131,7 @@ fn has_next_page(headers: HeaderMap) -> bool {
 /// Main function that fetches and combines both user and repository events.
 pub(crate) async fn fetch_github_activity(
     username: &str,
-    token: Option<&str>
+    token: Option<&str>,
 ) -> Result<Value, Box<dyn Error>> {
     let client = Client::new();
 

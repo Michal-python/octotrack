@@ -2,22 +2,21 @@ mod activity;
 mod cli;
 mod display;
 mod fetch;
-mod streak;
 mod spinner;
+mod streak;
 
-use cli::get_matches;
-use colored::*;
-use display::display_activity;
-use fetch::fetch_github_activity;
-use std::{env, io};
-use std::sync::Arc;
-use std::sync::atomic::AtomicBool;
-use tokio::sync::Mutex;
-use std::io::Write;
 use crate::activity::fetch_last_year_contributions;
 use crate::display::display_contributions_by_month;
 use crate::spinner::spawn_spinner_task;
 use crate::streak::fetch_streak_data;
+use cli::get_matches;
+use colored::*;
+use display::display_activity;
+use fetch::fetch_github_activity;
+use std::sync::Arc;
+use std::sync::atomic::AtomicBool;
+use std::{env};
+use tokio::sync::Mutex;
 
 #[tokio::main]
 async fn main() {
@@ -38,14 +37,22 @@ async fn main() {
             if json_output {
                 println!("{}", serde_json::to_string_pretty(&activity).unwrap());
             } else {
-                let streak = fetch_streak_data(username).await.expect("Couldn't fetch streak data");
+                let streak = fetch_streak_data(username)
+                    .await
+                    .expect("Couldn't fetch streak data");
                 let contributions = if github_token.is_some() && show_contributions {
-                    fetch_last_year_contributions(username, github_token.unwrap().as_str()).await
+                    fetch_last_year_contributions(username, github_token.unwrap().as_str())
+                        .await
                         .expect("Could not fetch last year contributions")
-                } else { vec![] };
+                } else {
+                    vec![]
+                };
 
-                running.lock().await.store(false, std::sync::atomic::Ordering::Relaxed);
-                write!(io::stdout(), "\r").unwrap();
+                running
+                    .lock()
+                    .await
+                    .store(false, std::sync::atomic::Ordering::Relaxed);
+                print!("\r");
 
                 display_activity(username, &activity, streak, detailed, show_streak);
 

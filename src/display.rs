@@ -1,7 +1,7 @@
-use std::cmp::min;
 use chrono::{Datelike, NaiveDate, Utc};
 use colored::*;
 use serde_json::Value;
+use std::cmp::min;
 use std::collections::HashMap;
 
 const MONTH_NAMES: [&str; 12] = [
@@ -19,7 +19,13 @@ const MONTH_NAMES: [&str; 12] = [
     "December",
 ];
 
-pub fn display_activity(username: &str, activity: &Value, streak: (String, String, String), detailed: bool, show_streak: bool) {
+pub fn display_activity(
+    username: &str,
+    activity: &Value,
+    streak: (String, String, String),
+    detailed: bool,
+    show_streak: bool,
+) {
     println!(
         "{} {}'s GitHub Latest Activity",
         "🔵".blue(),
@@ -119,7 +125,8 @@ pub fn display_contributions_by_month(contributions: Vec<u32>) {
         if count == 0 {
             continue;
         }
-        let bar = "█".repeat(min(count, 20) as usize) + &"▓".repeat(10 - min(count, 10) as usize / 2);
+        let bar =
+            "█".repeat(min(count, 20) as usize) + &"▓".repeat(10 - min(count, 10) as usize / 2);
 
         println!(
             "{}: {} {} contributions",
@@ -141,7 +148,11 @@ pub fn display_contributions_by_month(contributions: Vec<u32>) {
     println!("\nLongest Streak: {} months", max_streak);
 }
 
-pub fn display_streak_data(total_contributions: String, current_streak: String, longest_streak: String) {
+pub fn display_streak_data(
+    total_contributions: String,
+    current_streak: String,
+    longest_streak: String,
+) {
     println!("{}", "🔵 GitHub Streak Information".blue());
     println!("{}", "────────────────────────────────".blue());
 
