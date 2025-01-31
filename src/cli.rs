@@ -1,7 +1,7 @@
 use clap::{Arg, ArgAction, Command};
 
 pub fn get_matches() -> clap::ArgMatches {
-    Command::new("GitHub Activity Tracker")
+    Command::new("octotrack")
         .version("1.0")
         .author("Michal-python")
         .about("Github CLI activity viewer")
